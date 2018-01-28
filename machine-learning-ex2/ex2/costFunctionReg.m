@@ -17,27 +17,17 @@ grad = zeros(size(theta));
 %               Compute the partial derivatives and set grad to the partial
 %               derivatives of the cost w.r.t. each parameter in theta
 
-%h = sigmoid(X*theta);
-
-%k = ones(1,size(theta));
-%J = 1/m * (-y'*log(h) - (1-y)'*log(1-h)) + (lambda/(2*m))*(k*theta.^2);
-
-%X_0 = X(:,1);
-%theta_0 = theta(1,:);
-%h_0 = sigmoid(X_0*theta_0);
-%grad_0 = 1/m * X_0'*(h_0-y);
-
-%X_=X(:,2:columns(X));
-%theta_ = [0; theta(2:length(theta),:)];
-%h_ = sigmoid(X_*theta_);
-%grad = 1/m * X_'*(h_-y) + (lambda/m)*theta_;
-%grad = 1/m * X'*(h-y) + (lambda/m)*theta_;
-
-%grad = [grad_0; grad];
-
-
 h = sigmoid(X*theta);
+
+% Since regularization should not take into account the first element
+% of theta, i.e. theta(0), we create a copy of the theta vector with
+% the first row zeroed out. We plug this new vector into the original
+% cost and gradient equations with the addition of the regularization
+% term. With the first element of theta zeroed out, we effectively
+% cancel out the regularization for the first element of theta.
 theta_ = [0; theta(2:length(theta),:)];
+
+% the term theta_'*theta is a vectorization of the summation of theta_^squared
 J = 1/m * (-y'*log(h) - (1-y)'*log(1-h)) + (lambda/(2*m))*(theta_'*theta_);
 grad = 1/m * X'*(h-y) + (lambda/m)*theta_;
 
