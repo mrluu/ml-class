@@ -35,14 +35,22 @@ grad = zeros(size(theta));
 %           temp(1) = 0;   % because we don't add anything for j = 0  
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
+h = sigmoid(X*theta);
 
+% Since regularization should not take into account the first element
+% of theta, i.e. theta(0), we create a copy of the theta vector with
+% the first row zeroed out. We plug this new vector into the original
+% cost and gradient equations with the addition of the regularization
+% term. With the first element of theta zeroed out, we effectively
+% cancel out the regularization for the first element of theta.
 
+theta_ = [0; theta(2:length(theta),:)];
 
+% the term theta_'*theta is a vectorization of the summation of theta_^squared
 
+J = 1/m * (-y'*log(h) - (1-y)'*log(1-h)) + (lambda/(2*m))*(theta_'*theta_);
 
-
-
-
+grad = 1/m * X'*(h-y) + (lambda/m)*theta_;
 
 
 % =============================================================
