@@ -62,9 +62,22 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+%Forward propagation
+a1 = [ones(m,1), X];
+z2 = a1*Theta1';
+a2_ = sigmoid(z2);
+a2 = [ones(m,1), a2_];
+z3 = a2*Theta2';
+a3 = sigmoid(z3);
 
+%Create a matrix from the y vector
+y_matrix = eye(num_labels)(y,:);
 
+Theta1_ = Theta1(:,2:end);
+Theta2_ = Theta2(:,2:end);
+reg = (lambda/(2*m)) * (sum(sum(Theta1_.^2)) + sum(sum(Theta2_.^2)));
 
+J = 1/m * sum(sum(-y_matrix.*log(a3) - (1-y_matrix).*log(1-a3))) + reg;
 
 
 
