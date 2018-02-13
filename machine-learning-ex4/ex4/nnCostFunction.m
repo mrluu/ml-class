@@ -79,18 +79,13 @@ reg = (lambda/(2*m)) * (sum(sum(Theta1_.^2)) + sum(sum(Theta2_.^2)));
 
 J = 1/m * sum(sum(-y_matrix.*log(a3) - (1-y_matrix).*log(1-a3))) + reg;
 
-
-
-
-
-
-
-
-
-
-
-
-
+%Back propagation
+d3 = a3 - y_matrix;
+d2 = (d3 * Theta2_).*sigmoidGradient(z2);
+Delta1 = d2' * a1;
+Delta2 = d3' * a2;
+Theta1_grad = Delta1/m;
+Theta2_grad = Delta2/m;
 
 
 % -------------------------------------------------------------
