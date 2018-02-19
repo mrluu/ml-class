@@ -87,6 +87,16 @@ Delta2 = d3' * a2;
 Theta1_grad = Delta1/m;
 Theta2_grad = Delta2/m;
 
+% Regularize the gradients. 
+% Since we don't regularize for j=0, i.e. the first column,
+% we set the first column to zeros and then compute the regularization on
+% the rest of the matrix.
+Theta1(:,1)=0;
+Theta2(:,1)=0;
+Theta1_reg=(lambda/m)*Theta1;
+Theta2_reg=(lambda/m)*Theta2;
+Theta1_grad = Theta1_grad + Theta1_reg;
+Theta2_grad = Theta2_grad + Theta2_reg;
 
 % -------------------------------------------------------------
 
