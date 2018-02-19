@@ -19,7 +19,19 @@ grad = zeros(size(theta));
 %               You should set J to the cost and grad to the gradient.
 %
 
+h = X * theta;
+errors = h - y;
+J = 1/(2*m)*(errors)'*(errors);
+grad = (1/m) * X'*errors;
 
+% Add regularization
+% Since regularization should not take into account the first element
+% of theta, i.e. theta(0), we create a copy of the theta vector with
+% the first row zeroed out. We compute the regularization portion using
+% this version of theta with the first row zeroed out.
+theta_ = [0; theta(2:length(theta),:)];
+J = J + (lambda/(2*m))*(theta_'*theta_);
+grad = grad + (lambda/m)*theta_;
 
 
 
