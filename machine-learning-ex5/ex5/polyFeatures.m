@@ -14,8 +14,9 @@ X_poly = zeros(numel(X), p);
 %               column of X contains the values of X to the p-th power.
 %
 % 
-
-
+p_vec = linspace(1,p,p);
+%X_poly = X.^p_vec;
+X_poly = bsxfun(@power, X, p_vec);
 
 
 
