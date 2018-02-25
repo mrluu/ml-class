@@ -48,7 +48,15 @@ x = zeros(n, 1);
 %
 %
 
+% word_indices is a list of indexes from the vocabList that represents the email
+% i.e. each number (i.e. index) in word_indices is the index of the word from 
+% vocabList that matches the word in the email. x is column vector whose length
+% is the number of words in the vocabList. Since each value in word_indices
+% is an index from vocabList, all we need to do is take each value from 
+% word_indices  and set the value of x at that index to 1. Thus, we will have a % feature vector x with ones or zeroes that indicate whether each word
+% from vocabList (at that same index) % appears in the email.
 
+x(word_indices) = 1;
 
 
 
