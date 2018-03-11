@@ -39,12 +39,20 @@ Theta_grad = zeros(size(Theta));
 %        Theta_grad - num_users x num_features matrix, containing the 
 %                     partial derivatives w.r.t. to each element of Theta
 %
+h = X * Theta';
+errors = h - Y;
+error_factor = errors .* R;
+J = (1/2) * sum(sum(error_factor .^2));
 
+X_grad = error_factor * Theta;
+Theta_grad = error_factor' * X;
 
-
-
-
-
+% Regularized cost
+J = (1/2) * sum(sum(error_factor .^2)) + (lambda/2)*sum(sum(X .^ 2)) + (lambda/2)*sum(sum(Theta .^ 2));
+ 
+% Regularized gradients
+X_grad = error_factor * Theta + lambda * X;
+Theta_grad = error_factor' * X + lambda * Theta;
 
 
 
